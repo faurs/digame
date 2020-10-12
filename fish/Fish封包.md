@@ -93,10 +93,14 @@ Fish 封包<span id="標題"></span>
         - Angle    float64 // 角度，若無可免填
         - NpcID    int64   // NPC 識別碼 (鎖定用, 穿越任何 NPC 直接命中此目標)
 0. **擊中魚**<span id="擊中魚"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
+	- SFishBHitInfo
+		- NpcID int64	// NPC 識別碼
+		- X     int		// 命中的座標X
+		- Y     int		// 命中的座標Y
     - CtoGFishHit
         - Code int
-        - BulletID int64   // 子彈 ID
-        - NpcIDs   []int64 // NPC 識別碼列表
+        - BulletID	int64			// 子彈 ID
+        - HitInfos	[]SFishBHitInfo // 命中資訊列表
 0. **金額變更**<span id="金額變更"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
     - GtoCFishUpdateBalance
         - Code int
@@ -105,6 +109,8 @@ Fish 封包<span id="標題"></span>
         - BalanceAdjust int64 // 若為負值則表示扣錢
         - NpcID         int64 // NPC 識別碼
         - BulletID      int64 // 子彈 ID
+		- X              int  // 命中的座標X
+		- Y              int  // 命中的座標Y
 0. **技能數量變更**<span id="技能數量變更"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
     - GtoCFishUpdateSkillNum
         - Code int
@@ -114,6 +120,8 @@ Fish 封包<span id="標題"></span>
         - SkillNumAdjust int64 // 若為負值則表示扣除
         - NpcID          int64 // NPC 識別碼
         - BulletID       int64 // 子彈 ID
+		- X              int   // 命中的座標X
+		- Y              int   // 命中的座標Y
 0. **使用技能**<span id="使用技能"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
     - CtoGFishCastSkill
         - Code int
@@ -137,9 +145,9 @@ Fish 封包<span id="標題"></span>
 0. **技能影響範圍**<span id="技能影響範圍"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
     - CtoGFishSkillAreaOfEffect
         - Code int
-        - BulletID         int64   // 子彈 ID / 技能施放時間
-        - NpcIDMainTargets []int64 // NPC 識別碼列表
-        - NpcIDOthers      []int64 // NPC 識別碼列表
+        - BulletID         int64				// 子彈 ID / 技能施放時間
+        - HitInfoMainTargets []SFishBHitInfo	// 命中資訊列表，主打擊目標，此列表所受傷害較重
+        - HitInfoSub         []SFishBHitInfo	// 命中資訊列表，次打擊目標，此列表所受傷害較輕微
 0. **技能的目標變更**<span id="技能的目標變更"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
     - CtoGFishSkillTargetChanged
         - Code int
@@ -156,7 +164,6 @@ Fish 封包<span id="標題"></span>
         - BulletIDChanged    int64                    // 變更新目標的時間 (從此後也會用新的時間來當 ID)
         - NpcID              int64                    // NPC 識別碼, 如果技能必須指定 NPC, 則將 NPCID 放入此欄位, 若無可免填
         - Angle              float64                  // 角度, 若無可免填
-        - NPCLifeAdjustments []SFishNPCLifeAdjustment // 只要此欄位存在 (陣列長度不為 0), 程式就須處理
 0. **NPC 的皮膚更換**<span id="NPC 的皮膚更換"></span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#標題">(回到標題)</a>
     - GtoCFishNpcSkinChanged
         - Code int
